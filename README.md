@@ -43,13 +43,18 @@ The KAN module provides nonlinear feature representation through learnable
 B-spline transformations and maps the historical input sequence to the future
 SOC trajectory.
 
-In the reported configuration, the 30-step sequence with 12 input features was
-flattened into a 360-dimensional vector. The KAN layer widths were
-`360-8-8-30`, where the final 30 outputs correspond to the complete prediction
-horizon. Each KAN layer combined a SiLU base function with cubic B-spline
-functions using a grid size of five. The complete physics-informed KAN model,
-including the learnable battery-capacity parameter, contained 31,841 trainable
-parameters.
+The reported KAN configuration was as follows:
+
+- Input features: 12;
+- Input window length: 30 steps;
+- Flattened input dimension: 360;
+- KAN layer widths: `360-8-8-30`;
+- Prediction horizon: 30 steps;
+- Base activation function: SiLU;
+- B-spline order: 3 (cubic);
+- Grid size: 5;
+- Grid range: `[-1, 1]`;
+- Trainable parameters: 31,841.
 
 ### Physics-informed module
 
