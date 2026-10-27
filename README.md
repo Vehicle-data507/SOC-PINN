@@ -91,20 +91,17 @@ window paired with a 30-step SOC target sequence.
 
 ## Data partitioning strategy
 
-The data were first divided at the complete operating-segment level. GZ-1 was
-assigned to pre-defined training, validation, and test subsets. For the
-cross-vehicle experiments, approximately 20% of the GZ-2 segments and
-approximately 30% of the TJ-1 segments were allocated to target-domain
-adaptation, while the remaining segments were retained for independent
-testing. Each adaptation subset was further divided into training and
-validation data using an 80/20 file-level split with random seed 42.
+To prevent data leakage caused by overlapping sliding windows, the training,
+validation, and test sets were first partitioned at the level of complete
+operating segments. Sliding windows were then constructed independently within
+each segment. Each sample contained 30 historical time steps and the SOC
+targets for the following 30 consecutive time steps, with a stride of one.
+Samples were not constructed across files or operating-segment boundaries.
 
-After the segment-level partition was fixed, preprocessing and sliding-window
-construction were performed independently within each subset. Each segment
-generated 30-step input and 30-step target windows with a stride of one.
-Windows were not constructed across segment boundaries, ensuring that
-overlapping windows from the same segment could not appear in different data
-subsets.
+In the cross-vehicle transfer experiments, GZ-1 was used as the source-domain
+vehicle, while GZ-2 and TJ-1 were used as the target-domain vehicles. For GZ-2,
+20% of the target-domain data were used to fine-tune the last two KAN layers.
+For TJ-1, 30% of the target-domain data were used for full-model fine-tuning.
 
 
 ## Dependencies
